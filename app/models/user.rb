@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   MAILER_FROM_EMAIL = "no-reply@example.com"
 
+  has_many :active_sessions, dependent: :destroy
+
   attr_accessor :current_password
 
   has_secure_password
