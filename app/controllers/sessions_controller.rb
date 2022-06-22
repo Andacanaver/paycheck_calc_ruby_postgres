@@ -3,17 +3,15 @@ class SessionsController < ApplicationController
   before_action :authenticate_user!, only: [:destroy]
 
   def create
-    @user = User.find_by(email: params[:user][:email].downcase)
+    @user = User.authenticate_by(email: params[:user][:email].downcase)
     if @user
       if @user.unconfirmed?
         redirect_to new_confirmation_path, alert: "Incorrect email or password."
-      elsif @user.authenticate(params[:user][:password])
+      else
+        after_login_path = session[:after_login_path] || root_path
         login @user
         remember(@user) if params[:user][:remember_me] == "1"
-        redirect_to root_path, notice: "You have been logged in."
-      else
-        flash.now[:alert] = "Incorrect email or password."
-        render :new, status: :unprocessable_entity
+        redirect_to after_login_path, notice: "You have been logged in."
       end
     else
       flash.now[:alert] = "Incorrect email or password."
