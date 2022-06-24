@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_22_104505) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_23_230801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_104505) do
     t.datetime "updated_at", null: false
     t.string "user_agent"
     t.string "ip_address"
+    t.string "remember_token", null: false
+    t.index ["remember_token"], name: "index_active_sessions_on_remember_token", unique: true
     t.index ["user_id"], name: "index_active_sessions_on_user_id"
   end
 
@@ -30,9 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_104505) do
     t.datetime "confirmed_at"
     t.string "password_digest", null: false
     t.string "unconfirmed_email"
-    t.string "remember_token", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
   add_foreign_key "active_sessions", "users", on_delete: :cascade

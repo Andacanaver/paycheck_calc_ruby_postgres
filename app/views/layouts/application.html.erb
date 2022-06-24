@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <%= yield %>
+    <% if current_user %>
+      Logged in as <%= current_user.email %>
+      <%= link_to "Log Out", logout_path %>
+    <% else %>
+      <%= link_to "Sign Up", sign_up_path %>
+      <%= link_to "Log In", login_path %>
+    <% end %>
   </body>
 </html>

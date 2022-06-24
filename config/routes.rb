@@ -10,4 +10,11 @@ Rails.application.routes.draw do
   put "account", to: "users#update"
   get "account", to: "users#edit"
   delete "account", to: "users#destroy"
+  # Will delete active sessions associated with the current user. can also delete all active sessions.
+  resources :active_sessions, only: [:destroy] do
+    collection do
+      delete "destroy_all"
+    end
+  end
+
 end

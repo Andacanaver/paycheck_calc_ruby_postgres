@@ -11,8 +11,6 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  has_secure_token :remember_token
-
   before_save :downcase_unconfirmed_email
 
   validates :unconfirmed_email, format: {with: URI::MailTo::EMAIL_REGEXP}, presence: true, uniqueness: true
