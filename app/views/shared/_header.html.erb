@@ -1,0 +1,15 @@
+<nav>
+  <div>
+    <h1>Jacob Moe</h1>
+    <h2>Web Developer</h2>
+  </div>
+  <div>
+    <%= if user.present? %>
+      Logged in as <%= user.email %>.
+      <%= link_to "Logout", logout_path %>
+    <% else %>
+      <%= link_to "Sign Up", sign_up_path %> or 
+      <%= link_to "Login", login_path %>
+    <% end %>
+  </div>
+</nav>
